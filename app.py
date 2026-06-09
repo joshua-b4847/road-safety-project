@@ -19,11 +19,24 @@ def mission():
     conn.close()
     return render_template('mission.html', mission=content['content_body'])
 
+# FIXED: Added <name> to the route so the function receives it
+@app.route('/persona/<name>')
+def show_persona(name):
+    conn = get_db_connection()
+    # Fetch the query directly from the database based on the persona name!
+    persona = conn.execute('SELECT * FROM personas WHERE name = ?', (name,)).fetchone()
+    # Ensure a result was found to prevent errors
+    if persona:
+        data = conn.execute(persona['filter_query']).fetchall()
+    else:
+        data = []
+    conn.close()
+    return render_template('persona_view.html', persona=persona, data=data)
+
 @app.route('/discover')
 def discover():
     conn = get_db_connection()
     
-    # 1. Road Geometry in Dark (Existing)
     dark_accidents = conn.execute('''
         SELECT road_geometry, COUNT(*) as incident_count
         FROM crash_data
@@ -32,7 +45,6 @@ def discover():
         ORDER BY incident_count DESC LIMIT 5
     ''').fetchall()
     
-    # 2. NEW: Accidents by Day of Week
     day_accidents = conn.execute('''
         SELECT day_of_week, COUNT(*) as incident_count
         FROM crash_data
@@ -40,7 +52,6 @@ def discover():
         ORDER BY incident_count DESC
     ''').fetchall()
     
-    # 3. NEW: Severity by Speed Zone (Focus on Serious/Fatal)
     severity_speed = conn.execute('''
         SELECT speed_zone, severity, COUNT(*) as count
         FROM crash_data
@@ -59,17 +70,13 @@ def discover():
 def summary():
     conn = get_db_connection()
     
-    # default Summary
     general = conn.execute('SELECT severity, SUM("seriousinjury") as serious, SUM("otherinjury") as other FROM crash_data GROUP BY severity').fetchall()
-    
-    # marcus (Long-distance commuter)
     marcus = conn.execute('SELECT speed_zone, severity, COUNT(*) as count FROM crash_data GROUP BY speed_zone, severity ORDER BY count DESC LIMIT 5').fetchall()
-    
-    # elena (Cyclist)
     elena = conn.execute('SELECT light_condition, road_geometry, COUNT(*) as count FROM crash_data WHERE bicyclist > 0 GROUP BY light_condition, road_geometry LIMIT 5').fetchall()
     
     conn.close()
     return render_template('summary.html', general=general, marcus=marcus, elena=elena)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
