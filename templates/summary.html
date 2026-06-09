@@ -1,20 +1,32 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <h1>Accident Injury Summary</h1>
-    <table border="1">
-        <tr>
-            <th>Severity</th>
-            <th>Serious Injuries</th>
-            <th>Other Injuries</th>
-        </tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row['severity'] }}</td>
-            <td>{{ row['total_serious'] }}</td>
-            <td>{{ row['total_other'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+<h1>Road Safety Data</h1>
+
+<style>
+    table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+    th { background-color: #f2f2f2; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    h2 { color: #2c3e50; border-bottom: 2px solid #2c3e50; }
+</style>
+
+<h2>General Accident Summary</h2>
+<table>
+    <tr><th>Severity</th><th>Serious</th><th>Other</th></tr>
+    {% for row in general %}
+    <tr><td>{{ row['severity'] }}</td><td>{{ row['serious'] }}</td><td>{{ row['other'] }}</td></tr>
+    {% endfor %}
+</table>
+
+<h2>Long-distance Commuter View (Marcus)</h2>
+<table>
+    <tr><th>Speed Zone</th><th>Severity</th><th>Count</th></tr>
+    {% for row in marcus %}
+    <tr><td>{{ row['speed_zone'] }}</td><td>{{ row['severity'] }}</td><td>{{ row['count'] }}</td></tr>
+    {% endfor %}
+</table>
+
+<h2>Cyclist Safety View (Elena)</h2>
+<table>
+    <tr><th>Light Condition</th><th>Road Geometry</th><th>Count</th></tr>
+    {% for row in elena %}
+    <tr><td>{{ row['light_condition'] }}</td><td>{{ row['road_geometry'] }}</td><td>{{ row['count'] }}</td></tr>
+    {% endfor %}
+</table>
