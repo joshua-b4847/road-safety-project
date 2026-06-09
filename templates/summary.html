@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Accident Injury Summary</h1>
+    <table border="1">
+        <tr>
+            <th>Severity</th>
+            <th>Serious Injuries</th>
+            <th>Other Injuries</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row['severity'] }}</td>
+            <td>{{ row['total_serious'] }}</td>
+            <td>{{ row['total_other'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
