@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS crash_data (
     pedestrian INTEGER,
     driver INTEGER
 );
+
+-- personas
+CREATE TABLE personas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    filter_query TEXT NOT NULL
+);
