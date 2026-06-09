@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk Discovery</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>High-Risk Discovery Dashboard</h1>
+
+    <h2>1. Road Geometry in Dark Conditions</h2>
+    <table>
+        <tr><th>Road Geometry</th><th>Incident Count</th></tr>
+        {% for row in dark_accidents %}
+        <tr><td>{{ row['road_geometry'] }}</td><td>{{ row['incident_count'] }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <h2>2. Accidents by Day of Week</h2>
+    <table>
+        <tr><th>Day</th><th>Incident Count</th></tr>
+        {% for row in day_accidents %}
+        <tr><td>{{ row['day_of_week'] }}</td><td>{{ row['incident_count'] }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <h2>3. Top Serious/Fatal Incidents by Speed Zone</h2>
+    <table>
+        <tr><th>Speed Zone</th><th>Severity</th><th>Count</th></tr>
+        {% for row in severity_speed %}
+        <tr><td>{{ row['speed_zone'] }}</td><td>{{ row['severity'] }}</td><td>{{ row['count'] }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
