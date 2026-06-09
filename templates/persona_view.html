@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ persona['description'] }} View</title>
+</head>
+<body>
+    <h1>Data for: {{ persona['description'] }}</h1>
+    
+    <table border="1">
+        {% for row in data %}
+        <tr>
+            {% for key in row.keys() %}
+            <td>{{ row[key] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/summary">Back to Summary</a>
+</body>
+</html>
